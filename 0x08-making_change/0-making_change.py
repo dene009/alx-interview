@@ -1,9 +1,26 @@
 #!/usr/bin/python3
 """
-Main file for testing
+Given a pile of coins of different values,determine the
+fewest number of coins needed to meet a given amount total
 """
-makeChange = __import__('0-making_change').makeChange
 
-print(makeChange([1, 2, 25], 37))
 
-print(makeChange([1256, 54, 48, 16, 102], 1453))
+def makeChange(coins, total):
+    """
+    Return: fewest number of coins needed to meet total
+        If total is 0 or less, return 0
+        If total cannot be met by any number of coins you have, return -1
+    """
+    if total <= 0:
+        return 0
+
+    current_total = 0
+    coin_used = 0
+    coins = sorted(coins, reverse=True)
+    for coin in coins:
+        r = (total-current_total)//coin
+        current_total += r*coin
+        coin_used += r
+        if current_total == total:
+            return coin_used
+    return -1
